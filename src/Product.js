@@ -1,36 +1,29 @@
-import React, {useState, useEffect} from 'react'
+import React,  {useState, useEffect} from 'react'
 
 export default function Product() {
-    const [products, setProducts] = useState([])
-    const[IsLoading, setIsLoading] = useState(true)
+    const [products, stateProducts] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const setProducts = async () =>{
+       const data = await fetch("https://fakestoreapi.com/products") ;
+       const dataJson = await data.json();
+       stateProducts(dataJson);
+       setIsLoading(false)
+    }
 
-    const fetchProducts = async () => {
-        const res = await fetch ("https://fakestoreapi.com/products");
-        const data = await res.json();
-        setProducts(data);
-        setIsLoading(false)
-    };
-
-    useEffect(() => {
-        fetchProducts();
+    useEffect( () => {
+        setProducts();
     }, [])
-
-    // function productSelected() {
-    //     document.getElementsByName("{products}").Att
-    // }
 
     return(
         <div className = "products">
-            <h1>All products</h1>
-            {IsLoading && "Loading products..."}
-                {products.map((products) =>
-                <div className = "product" >
+            <h1>Products Available</h1>
+            {isLoading && 'Loading...'}
+            {products.map((products, i) => (
+                <div className = "product" key = {i}>
                     {products.title}
-                    <img name= {products} className ="product-image" onClick={"productSelected"} src= {products.image} alt = {products.title} />
+                    <img className = "product-image" src={products.image} alt = {products.title}></img>
                 </div>
-                )}
+            ))}
         </div>
-    );
-
+    )
 }
-
