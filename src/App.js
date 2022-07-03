@@ -1,7 +1,8 @@
 // import Card from "./Components/Card"
 
 // import Counter from "./Counter"
-import Product from "./Product"
+// import Product from "./Product"
+import Product2 from "./Product2"
 
 // const names = [
 //   "sunny",
@@ -58,7 +59,7 @@ function App(){
   return (
     <div>
       {/* <Counter/> */}
-      <Product />
+      <Product2 />
     </div>
   )
 }

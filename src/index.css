@@ -51,3 +51,9 @@ background-color: aqua;
   flex-wrap: wrap; 
 
 }
+
+.title{
+  display: inline;
+  border-radius: 1px solid gray;
+  text-overflow: inherit;
+}
