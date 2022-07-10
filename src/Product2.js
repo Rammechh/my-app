@@ -1,32 +1,39 @@
-import React,  {useState, useEffect, useRef} from 'react'
-import axios from 'axios'
+import useAPI from './Hooks/useAPI'
+
 
 export default function Product() {
-    const [products, setProducts] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState(null)
+    
+    const {products, isLoading, loadError} = useAPI("https://fakestoreapi.com/products")
+    
+    // // useRef - Value of it can change but Component is not re-rendered
+    // const productsRef = useRef([])
     // const reRenderCount = useRef(0)
+    // console.log("Re-render count", reRenderCount.current)
+    // reRenderCount.current += 1
+    
+    // //Eg for cleanup function
+    // const divRef = useRef(null);
 
-    const fetchProducts = async () =>{
-        try {
-    //    const data = await fetch("https://fakestoreapi.com/products") ;
-    //    const dataJson = await data.json();
-    //    setProducts(dataJson);
-        const res = await axios.get("https://fakestoreapi.com/products")
-        setProducts(res.data)
-        setIsLoading(false)
-        }
-        catch(e){
-            console.log("error", e);
-            setError(e);
-            setIsLoading(false);
-        }
-    };
+    // useEffect( () => {
+    //     console.log(productsRef)
+    //     console.log("Products", productsRef)
+    //     console.log("ProductsCurrent", productsRef.current)
+    //     productsRef.current.push("watch")
 
-    useEffect( () => {
-        fetchProducts();
-    }, []); 
+    //     // setInterval( () => {
+    //     //     productsRef.current.push("lol")
+    //     //     console.log(productsRef.current, productsRef.current.length)
+    //     // }, 1000);
 
+    //     // Cleanup function
+    //     //function addEventListener(divRef, {});
+    //     return () => {
+    //       console.log("unmounted")  
+    //         //function removeEventListener(divRef, {});
+    //     };
+
+    // }, []); 
+    
 
     if(isLoading){
         return(
@@ -35,12 +42,15 @@ export default function Product() {
             </div>
         )
     }
-    else if(error){
+    else if(loadError){
         return(
-            <div>Loading Error</div>
+            <div>Loading Error
+                console.log(loadError)
+            </div>
+            
         )
     }
-    else if (products.length > 0){
+    else if (products.length > 0) {
         return(
         <div className = "products">
            <h1 >Available Products</h1>
